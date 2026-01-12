@@ -35,6 +35,29 @@ def call(Map config = [:]) {
                 }
             }
 
+            stage('SonarQube Analysis') {
+                steps {
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                          mvn sonar:sonar \
+                            -Dsonar.projectKey=${appName} \
+                            -Dsonar.projectName=${appName}
+                        """
+                    }
+                }
+            }
+
+            stage('Quality Gate') {
+                steps {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                        timeout(time: 2, unit: 'MINUTES') {
+                            waitForQualityGate abortPipeline: true
+                        }
+                    }
+                }
+            }
+
+
             stage('Docker Build') {
                 steps {
                     script {
