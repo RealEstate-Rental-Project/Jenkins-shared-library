@@ -1,5 +1,5 @@
 def call(Map config = [:]) {
-    def dockerRegistry = config.registry ?: "yassinekamouss"
+    def dockerRegistry = config.registry ?: "saaymo"
     def appName = config.appName
     def sonarProjectKey = config.sonarProjectKey ?: appName // si non fourni, on utilise appName
 
