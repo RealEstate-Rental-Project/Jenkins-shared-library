@@ -63,7 +63,7 @@ def call(Map config = [:]) {
             stage('Docker Push') {
                 steps {
                     script {
-                        withCredentials([usernamePassword(credentialsId: 'CRED_DOCK', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                        withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                             sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
                             sh "docker push ${env.FULL_IMAGE_NAME}"
                             sh "docker push ${env.LATEST_IMAGE_NAME}"
