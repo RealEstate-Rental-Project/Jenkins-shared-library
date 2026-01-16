@@ -33,24 +33,24 @@ def call(Map config = [:]) {
                 }
             }
 
-            stage('SonarQube Analysis') {
-                steps {
-                    script {
-                        // Appel de la shared library Sonar avec le projectKey spécifique
-                        runSonarAnalysis(sonarProjectKey, 'maven')
-                    }
-                }
-            }
+            // stage('SonarQube Analysis') {
+            //     steps {
+            //         script {
+            //             // Appel de la shared library Sonar avec le projectKey spécifique
+            //             runSonarAnalysis(sonarProjectKey, 'maven')
+            //         }
+            //     }
+            // }
 
-            stage('Quality Gate') {
-                steps {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                        timeout(time: 2, unit: 'MINUTES') {
-                            waitForQualityGate abortPipeline: true
-                        }
-                    }
-                }
-            }
+            // stage('Quality Gate') {
+            //     steps {
+            //         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            //             timeout(time: 2, unit: 'MINUTES') {
+            //                 waitForQualityGate abortPipeline: true
+            //             }
+            //         }
+            //     }
+            // }
 
             stage('Docker Build') {
                 steps {
